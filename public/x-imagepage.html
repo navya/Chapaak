@@ -9,10 +9,10 @@
                 float: left;
             }
         }
-        .image {
-            float: left;
+        .pimage {
             height: 100%;
             width: 100%;
+            display: block;
         }
         .item {
             float: left;
@@ -20,7 +20,6 @@
             padding: 0;
         }
         .item img {
-            float: left;
             width: 100%;
             max-width: 100%;
         }
@@ -28,7 +27,7 @@
         <core-ajax url="/all" handleAs="json" auto on-core-response="{{ajaxResponse}}"></core-ajax>
         <div class="image">
             <template id="photos" repeat="{{item in photos}}" index="i">
-                <div id="{{item.name}}" class="item" style="width: {{photoWidthPercent}}%">
+                <div id="{{item.name}}" class="pimage" style="width: {{photoWidthPercent}}%; display: block; ">
                     <a href="{{item.url}}" target="_blank">
                         <img src="{{item.url}}">
                     </a>
@@ -67,7 +66,7 @@
 
 
 
-        /**
+        /**http://www.polymer-project.org/resources/tooling-strategy.htmlx%20inst
          * The array of photos
          *
          * @attribute photos

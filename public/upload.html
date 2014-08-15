@@ -27,57 +27,13 @@
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-touch-callout: none;
     }
-    paper-tabs,
-    core-toolbar {
-        background-color: #00bcd4;
-        color: #fff;
-        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-    }
-    core-toolbar paper-tabs {
-        box-shadow: none;
-    }
-    paper-tabs[noink][nobar] paper-tab.core-selected {
-        color: #ffff8d;
-    }
-    paper-tabs.transparent-teal {
-        background-color: transparent;
-        color: #00bcd4;
-        box-shadow: none;
-    }
-    paper-tabs.transparent-teal::shadow #selectionBar {
-        background-color: #00bcd4;
-    }
-    paper-tabs.transparent-teal paper-tab::shadow #ink {
-        color: #00bcd4;
-    }
-    h3 {
-        font-size: 16px;
-        font-weight: 400;
-    }
-    #container {
-        overflow: auto;
-    }
-    .card {
-        position: relative;
-        height: 150px;
-        width: 150px;
-        font-size: 50px;
-        margin: 8px;
-        background-color: #00bcd4;
-        border-radius: 4px;
-        cursor: default;
-    }
-    .view {
-        font-size: 250px;
-        background-color: #00bcd4;
-    }
     </style>
-    </style>
+
 </head>
 
-<body>
+<body fullbleed>
     <s-app></s-app>
-     <paper-toast id="toast1" text="Your form seems empty. You need to complete it before you submit it."></paper-toast>
+    <paper-toast id="toast1" text="Your age<br>form seems empty. You need to complete it before you submit it."></paper-toast>
 
     <polymer-element name="component-form" extends="form" oc-submit="{{ prepareSubmit }}" on-click="{{ handleClick }}">
         <script>
@@ -118,8 +74,60 @@
             polymer-ui-tabs > * {
                 border-right: 1px solid #000;
             }
+            paper-tabs,
+            core-toolbar {
+                background-color: #00bcd4;
+                color: #fff;
+                box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+            }
+            core-toolbar /deep/ paper-tabs {
+                box-shadow: none;
+            }
+            paper-tabs /deep/ paper-tab.core-selected {
+                color: #ffff8d;
+            }
+            paper-tabs.transparent-teal {
+                background-color: transparent;
+                color: #00bcd4;
+                box-shadow: none;
+            }
+            paper-tabs.transparent-teal::shadow #selectionBar {
+                background-color: #00bcd4;
+            }
+            paper-tabs.transparent-teal paper-tab::shadow #ink {
+                color: #00bcd4;
+            }
+            h3 {
+                font-size: 16px;
+                font-weight: 400;
+            }
+            #container {
+                overflow: auto;
+            }
+            .card {
+                position: relative;
+                height: 150px;
+                width: 150px;
+                font-size: 50px;
+                margin: 8px;
+                background-color: #00bcd4;
+                border-radius: 4px;
+                cursor: default;
+            }
+            .view {
+                font-size: 250px;
+                background-color: #00bcd4;
+            }
+            .cross-fade {
+                height: 100%;
+                width: 100%;
+            }
+            x-imagepage {
+                height: 100%;
+                width: 100%;
+            }
             </style>
-            <paper-tabs selected="{{page}}" flex>
+            <paper-tabs selected="{{page}}" flex class="transparent-teal">
 
                 <paper-tab>Upload</paper-tab>
                 <paper-tab>Gallery</paper-tab>
@@ -148,9 +156,10 @@
                     </section>
                     <section>
                         <div cross-fade>
-                            <br>Gallery Page<br>
+                            <br>Gallery Page
+                            <br>
                             <x-imagepage></x-imagepage>
-                            </div>
+                        </div>
                     </section>
                     <section>
                         <div cross-fade>

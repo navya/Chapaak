@@ -13,7 +13,36 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         </script><script src="js/modernizr-2.js"></script>
-        
+        <style type="text/css">
+			body {
+				font-family: 'Open Sans', sans-serif;
+			}
+			.back-link {
+				position: fixed;
+				top: 20px;
+				left: 20px;
+				z-index:9999;
+			}
+			.back-link a {
+				padding: 8px 10px;
+				background-color: rgba(0,0,0,0.4);
+				text-decoration: none; 
+				border-bottom: 1px #fff8de solid;
+				opacity: 0.4;
+				
+			  -webkit-transition: opacity 0.3s ease-out; 
+			     -moz-transition: opacity 0.3s ease-out; 
+			       -o-transition: opacity 0.3s ease-out; 
+			          transition: opacity 0.3s ease-out; 
+
+			}
+			.back-link a:hover,
+			.back-link a:focus {
+				text-decoration: none;
+				border-bottom: 1px #ffffff solid;
+				opacity: 1;
+			}
+		</style>
     </head>
     <body data-twttr-rendered="true" class="loaded">
      
