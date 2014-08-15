@@ -1,0 +1,115 @@
+<link rel="import" href="http://www.polymer-project.org/components/core-ajax/core-ajax.html">
+<polymer-element name="x-imagepage" attributes="count photosPerRow">
+    <template>
+        <style>
+        :host {
+            * {
+                padding: 0;
+                margin: 0;
+                float: left;
+            }
+        }
+        .image {
+            float: left;
+            height: 100%;
+            width: 100%;
+        }
+        .item {
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+        .item img {
+            float: left;
+            width: 100%;
+            max-width: 100%;
+        }
+        </style>
+        <core-ajax url="/all" handleAs="json" auto on-core-response="{{ajaxResponse}}"></core-ajax>
+        <div class="image">
+            <template id="photos" repeat="{{item in photos}}" index="i">
+                <div id="{{item.name}}" class="item" style="width: {{photoWidthPercent}}%">
+                    <a href="{{item.url}}" target="_blank">
+                        <img src="{{item.url}}">
+                    </a>
+                </div>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer('x-imagepage', {
+        /**
+         * The number of results to request/display
+         *a
+         * @attribute count
+         * @type integer
+         * @default 30
+         */
+        count: 30,
+        /**
+         * The number of photos to display per row
+         *
+         * @attribute photosPerRow
+         * @type integer
+         * @default 10
+         */
+        photosPerRow: 10,
+        /**
+         * The width of each photo
+         *
+         * @attribute photoWidthPercent
+         * @type integer
+         * @default 10
+         */
+        photoWidthPercent: 10,
+
+
+
+
+
+        /**
+         * The array of photos
+         *
+         * @attribute photos
+         * @type array
+         * @default []
+         */
+        photos: [],
+        ajaxResponse: function(event, response) {
+            console.log(response.response);
+            this.photoWidthPercent = 100 / this.photosPerRow;
+            this.$.photos.model = this.photos;
+             this.photos = response.response;
+                    this.$.photos.model = {
+                        photos: response.response
+                    };
+                    this.fire('x-imagepage-load', {
+                        response: response.response
+                    });
+        }
+        /**
+        ready: function() {
+        	 var ajax = document.querySelector('x-imagepage');
+            this.photoWidthPercent = 100 / this.photosPerRow;
+            this.$.photos.model = this.photos;
+            ajax.addEventListener('core-response', function(e) {
+          console.log(this.response);
+        });
+
+        ajax.go(); // Call its API methods.
+            this.$.ajax.addEventListener('polymer-response',
+                function(e) {
+                    console.log(e);
+                    this.photos = e;
+                    this.$.photos.model = {
+                        photos: e
+                    };
+                    this.fire('x-imagepage-load', {
+                        response: e
+                    });
+                }.bind(this)
+            ); 
+        }**/
+    });
+    </script>
+</polymer-element>

@@ -22,12 +22,13 @@ api.upload = function *upload(){
         if (part.pipe) {
             uobj.date = Date.now();
             uobj.name = uobj.date+'$'+part.filename;
-            var stream = fs.createWriteStream(__dirname + '/tmp/' + uobj.name );
+            uobj.url = '/uploads/'+uobj.name;
+            var stream = fs.createWriteStream(__dirname + '/public/uploads/' + uobj.name );
             part.pipe(stream);
             console.log('uploading %s -> %s', part.filename, stream.path);
         } else {
             //This is not the file so we store it in the object
-            uobj[part[0]] = part[1]
+            uobj[part[0]] = part[1];
         }
     }
     var res = yield pic.insert(uobj);
