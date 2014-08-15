@@ -27,9 +27,9 @@
         <core-ajax url="/all" handleAs="json" auto on-core-response="{{ajaxResponse}}"></core-ajax>
         <div class="image">
             <template id="photos" repeat="{{item in photos}}" index="i">
-                <div id="{{item.name}}" class="pimage" style="width: {{photoWidthPercent}}%; display: block; ">
+                <div id="{{item.name}}" class="pimage" style="width: {{photoWidthPercent}}%; ">
                     <a href="{{item.url}}" target="_blank">
-                        <img src="{{item.url}}">
+                        <img src="{{item.url}}" >
                     </a>
                 </div>
             </template>

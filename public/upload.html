@@ -27,6 +27,10 @@
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-touch-callout: none;
     }
+          s-app {
+        height: 100%;
+        width: 100%
+      }
     </style>
 
 </head>
@@ -101,30 +105,13 @@
                 font-size: 16px;
                 font-weight: 400;
             }
-            #container {
-                overflow: auto;
-            }
-            .card {
-                position: relative;
-                height: 150px;
-                width: 150px;
-                font-size: 50px;
-                margin: 8px;
-                background-color: #00bcd4;
-                border-radius: 4px;
-                cursor: default;
-            }
-            .view {
-                font-size: 250px;
-                background-color: #00bcd4;
-            }
             .cross-fade {
                 height: 100%;
                 width: 100%;
             }
 
             </style>
-            <paper-tabs selected="{{page}}" flex class="transparent-teal">
+            <paper-tabs selected="{{page}}"  class="transparent-teal">
 
                 <paper-tab>Upload</paper-tab>
                 <paper-tab>Gallery</paper-tab>
@@ -133,10 +120,10 @@
             </paper-tabs>
 
             </div>
-            <div horizontal center-justified layout>
-                <core-animated-pages selected="{{page}}" transitions="cross-fade">
-                    <section>
-                        <div cross-fade>
+            <div  horizontal center-justified layout>
+                <core-animated-pages selected="{{page}}" transitions="cross-fade" flex>
+                    <section >
+                        <div cross-fade >
                             <br>
                             <h1>Chapaak-it!!</h1>
                             <form is="component-form" action="/upload" method="POST" enctype="multipart/form-data">
@@ -152,14 +139,14 @@
                         </div>
                     </section>
                     <section>
-                        <div cross-fade>
+                        <div cross-fade >
                             <br>Gallery Page
                             <br>
                             <x-imagepage></x-imagepage>
                         </div>
                     </section>
                     <section>
-                        <div cross-fade>
+                        <div cross-fade >
                             <br>FAQs</div>
                     </section>
         </template>
