@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://www.polymer-project.org/components/platform/platform.js"></script>
+    <link rel="import" href="http://www.polymer-project.org/components/polymer/polymer.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-input/paper-input.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-button/paper-button.html">
+    <link rel="import" href="http://www.polymer-project.org/components/font-roboto/roboto.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-icons/core-icons.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-tabs/paper-tabs.html">
+    <link rel="import" href="http://www.polymer-project.org/components/core-animated-pages/core-animated-pages.html">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-toast/paper-toast.html">
+
+    <style shim-shadowdom>
+    body {
+        font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+        margin: 0;
+        color: #333;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+    }
+    paper-tabs,
+    core-toolbar {
+        background-color: #00bcd4;
+        color: #fff;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+    }
+    core-toolbar paper-tabs {
+        box-shadow: none;
+    }
+    paper-tabs[noink][nobar] paper-tab.core-selected {
+        color: #ffff8d;
+    }
+    paper-tabs.transparent-teal {
+        background-color: transparent;
+        color: #00bcd4;
+        box-shadow: none;
+    }
+    paper-tabs.transparent-teal::shadow #selectionBar {
+        background-color: #00bcd4;
+    }
+    paper-tabs.transparent-teal paper-tab::shadow #ink {
+        color: #00bcd4;
+    }
+    h3 {
+        font-size: 16px;
+        font-weight: 400;
+    }
+    #container {
+        overflow: auto;
+    }
+    .card {
+        position: relative;
+        height: 150px;
+        width: 150px;
+        font-size: 50px;
+        margin: 8px;
+        background-color: #00bcd4;
+        border-radius: 4px;
+        cursor: default;
+    }
+    .view {
+        font-size: 250px;
+        background-color: #00bcd4;
+    }
+    </style>
+    </style>
+</head>
+
+<body>
+    <s-app></s-app>
+     <paper-toast id="toast1" text="Your form seems empty. You need to complete it before you submit it."></paper-toast>
+
+    <polymer-element name="component-form" extends="form" oc-submit="{{ prepareSubmit }}" on-click="{{ handleClick }}">
+        <script>
+        Polymer('component-form', {
+
+            handleClick: function(event, detail, sender) {
+                if (event.target.localName.indexOf('-') !== -1 && event.target.getAttribute('type') === 'submit') {
+                    if (this.prepareSubmit()) {
+                        this.submit();
+                    } else {
+                        document.querySelector('#toast1').show()
+                    }
+                }
+            },
+            prepareSubmit: function() {
+                Array.prototype.forEach.call(this.children, function(child) {
+                    var name = child.getAttribute('name');
+                    if (child.localName.indexOf('-') !== -1 && name && 'value' in child && child.getAttribute('type') !== 'submit' && child.value) {
+                        if (child.value == undefined || child.value == "") return false;
+                        element = document.createElement('input');
+                        element.setAttribute('type', 'hidden');
+                        element.setAttribute('name', name);
+                        element.setAttribute('value', child.value);
+                        this.appendChild(element);
+                    }
+                }.bind(this));
+                return true
+            }
+        });
+        </script>
+    </polymer-element>
+    <polymer-element name="s-app">
+        <template>
+            <style>
+            polymer-ui-tabs {
+                border-top: 1px solid #000;
+            }
+            polymer-ui-tabs > * {
+                border-right: 1px solid #000;
+            }
+            </style>
+            <paper-tabs selected="{{page}}" flex>
+
+                <paper-tab>Upload</paper-tab>
+                <paper-tab>Gallery</paper-tab>
+                <paper-tab>FAQs</paper-tab>
+
+            </paper-tabs>
+
+            </div>
+            <div horizontal center-justified layout>
+                <core-animated-pages selected="{{page}}" transitions="cross-fade">
+                    <section>
+                        <div cross-fade>
+                            <br>
+                            <h1>Chapaak-it!!</h1>
+                            <form is="component-form" action="/upload" method="POST" enctype="multipart/form-data">
+                                <paper-input floatinglabel label="Small Description" name="info" required></paper-input>
+                                <br/>
+                                <br>
+                                <br>
+                                <input type="file" name="file" required>
+                                <br>
+                                <br>
+                                <paper-button raisedButton type="submit" label="Submit" required></paper-button>
+                            </form>
+                        </div>
+                    </section>
+                    <section>
+                        <div cross-fade>
+                            <br>Gallery Page</div>
+                    </section>
+                    <section>
+                        <div cross-fade>
+                            <br>FAQs</div>
+                    </section>
+        </template>
+        <script>
+        // switch page on tab
+        Polymer('s-app', {
+            page: 0
+        });
+        </script>
+    </polymer-element>
+</body>
+
+</html>
