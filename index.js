@@ -41,12 +41,26 @@ api.all = function *all(){
     this.body = res ;
   //  this.redirect('/');
 }
+api.range = function *all(){
+    console.log(this.req);
+      //  var query = this.req.uri.query ;
+        var limit =  5;
+        var skip =  0 ;
+    var res = yield pic.find({},{
+    "limit": limit,
+    "sort": "date",
+    "skip": skip
+});
+    this.body = res ;
+  //  this.redirect('/');
+}
 
 // serve files from ./public
 app.use(serve(__dirname + '/public'));
 // handle uploads
 app.use(_.post('/upload', api.upload));
 app.use(_.get('/all', api.all));
+app.use(_.get('/recent', api.range));
 // listen
 app.listen(3000);
 console.log('listening on port 3000');
