@@ -12,6 +12,16 @@ var db = monk('localhost/chapaak');
 var pic = co_monk(db.get('pic'));
 var app = koa();
 
+app.use(function *(next) {
+  try {
+    yield next;
+  } catch (err) {
+    this.status = err.status || 500;
+    this.body = err.message;
+    this.app.emit('error', err, this);
+  }
+});
+
 
 var api = {};
 
