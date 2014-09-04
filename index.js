@@ -4,6 +4,7 @@
 var _ = require('koa-route');
 var serve = require('koa-static');
 var parse = require('co-busboy');
+//var bodyParser = require('koa-bodyparser');
 var koa = require('koa');
 var fs = require('fs');
 var monk = require('monk');
@@ -21,7 +22,7 @@ app.use(function *(next) {
     this.app.emit('error', err, this);
   }
 });
-
+//app.use(bodyParser());
 
 var api = {};
 
@@ -33,6 +34,7 @@ api.upload = function *upload(){
             uobj.date = Date.now();
             uobj.name = uobj.date+'$'+part.filename;
             uobj.url = '/uploads/'+uobj.name;
+            uobj.index = true;
             var stream = fs.createWriteStream(__dirname + '/public/uploads/' + uobj.name );
             part.pipe(stream);
             console.log('uploading %s -> %s', part.filename, stream.path);
@@ -52,10 +54,16 @@ api.all = function *all(){
   //  this.redirect('/');
 }
 api.range = function *all(){
-    console.log(this.req);
-      //  var query = this.req.uri.query ;
-        var limit =  5;
-        var skip =  0 ;
+    //quick hack to retrieve get param, the default koa one wasn't work properly at time developing
+    var query = this.req._parsedUrl.query.split('&');
+    var param = {};
+    for (var i = query.length - 1; i >= 0; i--) {
+        var temp = query[i].split('=');
+        param[temp[0]]= temp[1];
+    };
+        console.log(param);
+        var limit =  param[limit] || 5;
+        var skip =  param[skip] || 0 ;
     var res = yield pic.find({},{
     "limit": limit,
     "sort": "date",
@@ -74,3 +82,4 @@ app.use(_.get('/recent', api.range));
 // listen
 app.listen(3000);
 console.log('listening on port 3000');
+
