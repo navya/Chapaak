@@ -35,7 +35,9 @@ api.upload = function *upload(){
             uobj.name = uobj.date+'$'+part.filename;
             uobj.url = '/uploads/'+uobj.name;
             uobj.index = true;
-            var stream = fs.createWriteStream(__dirname + '/public/uploads/' + uobj.name );
+            var stream = fs.createWriteStream(__dirname + '/public/uploads/' + uobj.name, { flags: 'w',
+  encoding: null,
+  mode: 0666 } );
             part.pipe(stream);
             console.log('uploading %s -> %s', part.filename, stream.path);
         } else {
